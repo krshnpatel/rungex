@@ -1,4 +1,28 @@
 {
   "name": "rungex",
-  "packageManager": "yarn@3.6.1"
+  "packageManager": "yarn@3.6.1",
+  "description": "A Yarn plugin that can be used to run multiple commands with regex.",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/krshnpatel/rungex.git"
+  },
+  "keywords": [
+    "yarn",
+    "plugin",
+    "regex",
+    "run",
+    "command",
+    "scripts"
+  ],
+  "author": "Krishan Patel",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/krshnpatel/rungex/issues"
+  },
+  "homepage": "https://github.com/krshnpatel/rungex#readme"
 }

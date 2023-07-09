@@ -1,10 +1,11 @@
 {
-  "name": "rungex",
+  "name": "yarn-plugin-rungex",
   "packageManager": "yarn@3.6.1",
   "description": "A Yarn plugin that can be used to run multiple commands with regex.",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/index.ts",
   "scripts": {
+    "build": "builder build plugin",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,5 +25,15 @@
   "bugs": {
     "url": "https://github.com/krshnpatel/rungex/issues"
   },
-  "homepage": "https://github.com/krshnpatel/rungex#readme"
+  "homepage": "https://github.com/krshnpatel/rungex#readme",
+  "devDependencies": {
+    "@yarnpkg/builder": "^4.0.0-rc.48",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "@yarnpkg/cli": "^4.0.0-rc.48",
+    "@yarnpkg/core": "^4.0.0-rc.48",
+    "clipanion": "^3.2.1",
+    "typanion": "^3.13.0"
+  }
 }

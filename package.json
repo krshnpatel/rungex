@@ -27,7 +27,11 @@
   },
   "homepage": "https://github.com/krshnpatel/rungex#readme",
   "devDependencies": {
+    "@types/eslint": "^8",
+    "@typescript-eslint/eslint-plugin": "latest",
+    "@typescript-eslint/parser": "latest",
     "@yarnpkg/builder": "^4.0.0-rc.48",
+    "eslint": "^8.44.0",
     "typescript": "^5.1.6"
   },
   "dependencies": {

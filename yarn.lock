@@ -3336,7 +3336,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typanion@npm:^3.12.1, typanion@npm:^3.13.0, typanion@npm:^3.8.0":
+"typanion@npm:^3.12.1, typanion@npm:^3.8.0":
   version: 3.13.0
   resolution: "typanion@npm:3.13.0"
   checksum: 7d1506ab3a635ca5aaf84696829092f4cf6949c7995e950e0a744f55b4d4a824e2cf22278d37c323396188240d0003bd10de14a64da8e1ded3ddd71dcec2d146
@@ -3517,12 +3517,12 @@ __metadata:
     "@yarnpkg/builder": ^4.0.0-rc.48
     "@yarnpkg/cli": ^4.0.0-rc.48
     "@yarnpkg/core": ^4.0.0-rc.48
+    "@yarnpkg/shell": ^4.0.0-rc.48
     clipanion: ^3.2.1
     eslint: ^8.44.0
     husky: ^8.0.3
     lint-staged: ^13.2.3
     prettier: ^3.0.0
-    typanion: ^3.13.0
     typescript: ^5.1.6
     watch: ^1.0.2
   languageName: unknown

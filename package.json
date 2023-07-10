@@ -1,15 +1,49 @@
 {
-  "name": "rungex",
+  "author": "Krishan Patel",
+  "license": "MIT",
+  "name": "yarn-plugin-rungex",
   "packageManager": "yarn@3.6.1",
   "description": "A Yarn plugin that can be used to run multiple commands with regex.",
   "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "main": "src/index.ts",
+  "homepage": "https://github.com/krshnpatel/rungex#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/krshnpatel/rungex.git"
+  },
+  "bugs": {
+    "url": "https://github.com/krshnpatel/rungex/issues"
+  },
+  "scripts": {
+    "update:local": "builder build plugin --no-minify",
+    "start": "watch 'yarn update:local' ./src",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
+    "prepare": "husky install",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": "yarn lint:fix",
+    "*.{ts,tsx,js,css,md}": "prettier --write"
+  },
+  "devDependencies": {
+    "@types/eslint": "^8",
+    "@types/watch": "^1",
+    "@typescript-eslint/eslint-plugin": "latest",
+    "@typescript-eslint/parser": "latest",
+    "@yarnpkg/builder": "^4.0.0-rc.48",
+    "@yarnpkg/cli": "^4.0.0-rc.48",
+    "@yarnpkg/core": "^4.0.0-rc.48",
+    "@yarnpkg/shell": "^4.0.0-rc.48",
+    "eslint": "^8.44.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.3",
+    "prettier": "^3.0.0",
+    "typescript": "^5.1.6",
+    "watch": "^1.0.2"
+  },
+  "dependencies": {
+    "clipanion": "^3.2.1"
   },
   "keywords": [
     "yarn",
@@ -18,11 +52,5 @@
     "run",
     "command",
     "scripts"
-  ],
-  "author": "Krishan Patel",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/krshnpatel/rungex/issues"
-  },
-  "homepage": "https://github.com/krshnpatel/rungex#readme"
+  ]
 }

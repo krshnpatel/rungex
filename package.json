@@ -15,9 +15,8 @@
     "url": "https://github.com/krshnpatel/rungex/issues"
   },
   "scripts": {
-    "build": "builder build plugin",
-    "build:local": "builder build plugin --no-minify",
-    "start": "watch 'yarn build:local' ./src",
+    "update:local": "builder build plugin --no-minify",
+    "start": "watch 'yarn update:local' ./src",
     "lint": "eslint src/",
     "lint:fix": "eslint src/ --fix",
     "prepare": "husky install",

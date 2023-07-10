@@ -10,5 +10,5 @@
 # !.yarn/cache
 .pnp.*
 
-# Build
-**/bundles
+# Node
+**/node_modules

@@ -24,7 +24,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "lint-staged": {
-    "*.{ts,tsx}": "yarn lint:fix"
+    "*.{ts,tsx}": "yarn lint:fix",
+    "*.{ts,tsx,js,css,md}": "prettier --write"
   },
   "devDependencies": {
     "@types/eslint": "^8",
@@ -35,6 +36,7 @@
     "eslint": "^8.44.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.3",
+    "prettier": "^3.0.0",
     "typescript": "^5.1.6",
     "watch": "^1.0.2"
   },

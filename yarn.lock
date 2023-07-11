@@ -3515,7 +3515,6 @@ __metadata:
     "@typescript-eslint/eslint-plugin": latest
     "@typescript-eslint/parser": latest
     "@yarnpkg/builder": ^4.0.0-rc.48
-    "@yarnpkg/cli": ^4.0.0-rc.48
     "@yarnpkg/core": ^4.0.0-rc.48
     "@yarnpkg/shell": ^4.0.0-rc.48
     clipanion: ^3.2.1

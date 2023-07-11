@@ -36,7 +36,6 @@ var plugin = (() => {
   });
 
   // src/rungex.ts
-  var import_cli = __require("@yarnpkg/cli");
   var import_clipanion = __require("clipanion");
   var import_core = __require("@yarnpkg/core");
 
@@ -65,20 +64,53 @@ var plugin = (() => {
     details: "This command will print a nice message.",
     examples: [["Add two numbers together", "yarn addition 42 10"]]
   };
-  var RungexCommand = class extends import_cli.BaseCommand {
+  var RungexCommand = class extends import_clipanion.Command {
     constructor() {
       super(...arguments);
       this.scriptMatcher = import_clipanion.Option.String({ required: true });
-      this.ci = import_clipanion.Option.Boolean("--ci", false);
-      this.parallel = import_clipanion.Option.Boolean("-P,--parallel", false);
+      this.ci = import_clipanion.Option.Boolean("-c,--ci", false);
+      this.parallel = import_clipanion.Option.Boolean("-p,--parallel", false);
+      this.startsWith = import_clipanion.Option.Boolean("-sw,--starts-with", false);
+      this.endsWith = import_clipanion.Option.Boolean("-ew,--ends-with", false);
       this.matchedScripts = [];
     }
     async execute() {
+      this.validate();
+      const exitCode = await this.getMatchingScripts();
+      if (exitCode !== -1)
+        return exitCode;
+      if (this.ci) {
+        return await this.runMatchedScripts();
+      }
+      return await this.confirm();
+    }
+    validate() {
+      if (this.startsWith && this.endsWith) {
+        throw new import_clipanion.UsageError(
+          'Invalid option schema: mutually exclusive properties "startsWith", "endsWith"'
+        );
+      }
+    }
+    async getMatchingScripts() {
       const { scripts } = await import_core.Manifest.fromFile(import_core.Manifest.fileName);
+      if (scripts.size === 0) {
+        this.context.stdout.write(
+          `There are no scripts defined in ${import_core.Manifest.fileName}.
+`
+        );
+        return 0;
+      }
       let matchedScriptsText = "";
-      console.log({ scriptMatcher: this.scriptMatcher });
       for (const script of scripts.keys()) {
-        if (script.match(this.scriptMatcher)) {
+        let matched = false;
+        if (this.startsWith) {
+          matched = script.startsWith(this.scriptMatcher);
+        } else if (this.endsWith) {
+          matched = script.endsWith(this.scriptMatcher);
+        } else {
+          matched = !!script.match(this.scriptMatcher)?.length;
+        }
+        if (matched) {
           const fullScript = `yarn ${script}`;
           this.matchedScripts.push(fullScript);
           matchedScriptsText += `-> "${fullScript}"
@@ -86,23 +118,24 @@ var plugin = (() => {
         }
       }
       if (this.matchedScripts.length === 0) {
-        this.context.stdout.write("There were no matched scripts to run.\n");
+        this.context.stdout.write(
+          "There were no matched scripts to run.\n"
+        );
         return 0;
       }
       this.context.stdout.write("Matched scripts:\n");
       this.context.stdout.write(`${matchedScriptsText}
 `);
-      if (this.ci) {
-        return await this.runMatchedScripts();
-      }
-      return await this.confirm();
+      return -1;
     }
     async confirm() {
       const readlineSync = new ReadlineSync({
         input: this.context.stdin,
         output: this.context.stdout
       });
-      const { answer } = await readlineSync.askQuestion("Do you want to run the matched scripts? (y/N): ");
+      const { answer } = await readlineSync.askQuestion(
+        "Do you want to run the matched scripts? (y/N): "
+      );
       if (["y", "Y", "yes", "YES", "Yes"].includes(answer)) {
         return await this.runMatchedScripts();
       } else {
@@ -111,10 +144,11 @@ var plugin = (() => {
       }
     }
     async runMatchedScripts() {
-      const startTime = new Date().getTime();
       let exitCode = 0;
       if (this.parallel) {
-        const executePromises = this.matchedScripts.map((script) => (0, import_shell.execute)(script));
+        const executePromises = this.matchedScripts.map(
+          (script) => (0, import_shell.execute)(script)
+        );
         const exitCodes = await Promise.all(executePromises);
         exitCode = exitCodes.some((code) => code) ? 1 : 0;
       } else {

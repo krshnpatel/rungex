@@ -1,5 +1,4 @@
-import { BaseCommand } from '@yarnpkg/cli';
-import { Command, Option, Usage } from 'clipanion';
+import { Command, Option, Usage, UsageError } from 'clipanion';
 import { Manifest } from '@yarnpkg/core';
 import { ReadlineSync } from './utils/readlineSync';
 import { execute } from '@yarnpkg/shell';
@@ -12,24 +11,66 @@ const COMMAND_USAGE: Usage = {
     examples: [['Add two numbers together', 'yarn addition 42 10']],
 };
 
-export class RungexCommand extends BaseCommand {
+export class RungexCommand extends Command {
     static paths = [[COMMAND_NAME]];
     static usage = Command.Usage(COMMAND_USAGE);
 
     scriptMatcher: string = Option.String({ required: true });
-    ci: boolean = Option.Boolean('--ci', false);
-    parallel: boolean = Option.Boolean('-P,--parallel', false);
+    ci: boolean = Option.Boolean('-c,--ci', false);
+    parallel: boolean = Option.Boolean('-p,--parallel', false);
+    startsWith: boolean = Option.Boolean('-sw,--starts-with', false);
+    endsWith: boolean = Option.Boolean('-ew,--ends-with', false);
 
     matchedScripts: string[] = [];
 
     async execute(): Promise<number> {
+        // Input validation
+        this.validate();
+
+        // Get matching scripts
+        const exitCode = await this.getMatchingScripts();
+        if (exitCode !== -1) return exitCode;
+
+        // Check if --ci option is passed
+        if (this.ci) {
+            return await this.runMatchedScripts();
+        }
+        // Else, display matched scripts and wait for input
+        return await this.confirm();
+    }
+
+    validate() {
+        if (this.startsWith && this.endsWith) {
+            throw new UsageError(
+                'Invalid option schema: mutually exclusive properties "startsWith", "endsWith"'
+            );
+        }
+    }
+
+    async getMatchingScripts(): Promise<number> {
         const { scripts } = await Manifest.fromFile(Manifest.fileName);
 
-        let matchedScriptsText = '';
+        // Check if there are any scripts in the manifest file
+        if (scripts.size === 0) {
+            this.context.stdout.write(
+                `There are no scripts defined in ${Manifest.fileName}.\n`
+            );
+            return 0;
+        }
 
-        console.log({ scriptMatcher: this.scriptMatcher });
+        // Determine matched scripts
+        let matchedScriptsText = '';
         for (const script of scripts.keys()) {
-            if (script.match(this.scriptMatcher)) {
+            let matched = false;
+            if (this.startsWith) {
+                matched = script.startsWith(this.scriptMatcher);
+            } else if (this.endsWith) {
+                matched = script.endsWith(this.scriptMatcher);
+            } else {
+                matched = !!script.match(this.scriptMatcher)?.length;
+            }
+
+            if (matched) {
                 const fullScript = `yarn ${script}`;
                 this.matchedScripts.push(fullScript);
                 matchedScriptsText += `-> "${fullScript}"\n`;
@@ -48,12 +89,7 @@ export class RungexCommand extends BaseCommand {
         this.context.stdout.write('Matched scripts:\n');
         this.context.stdout.write(`${matchedScriptsText}\n`);
 
-        // Check if --ci option is passed
-        if (this.ci) {
-            return await this.runMatchedScripts();
-        }
-        // Else, display matched scripts and wait for input
-        return await this.confirm();
+        return -1;
     }
 
     async confirm(): Promise<number> {
@@ -74,7 +110,7 @@ export class RungexCommand extends BaseCommand {
     }
 
     async runMatchedScripts(): Promise<number> {
-        const startTime = new Date().getTime();
+        // const startTime = new Date().getTime();
         // console.log({ startTime });
         let exitCode = 0;
         if (this.parallel) {

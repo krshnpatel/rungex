@@ -2,6 +2,8 @@ import { Command, Option, Usage, UsageError } from 'clipanion';
 import { Manifest } from '@yarnpkg/core';
 import { ReadlineSync } from './utils/readlineSync';
 import { execute } from '@yarnpkg/shell';
+import { Logger, initLogger } from './utils/logger';
+import chalk from 'chalk';
 
 const COMMAND_NAME = 'rungex';
 
@@ -22,8 +24,14 @@ export class RungexCommand extends Command {
     endsWith: boolean = Option.Boolean('-ew,--ends-with', false);
 
     matchedScripts: string[] = [];
+    log: Logger;
 
     async execute(): Promise<number> {
+        this.log = initLogger(this.context.stdout);
+
+        this.log.title('RUNGEX');
+        this.log.newLine();
+
         // Input validation
         this.validate();
 
@@ -48,17 +56,19 @@ export class RungexCommand extends Command {
     }
 
     async getMatchingScripts(): Promise<number> {
-        const { scripts } = await Manifest.fromFile(Manifest.fileName);
+        const { fileName } = Manifest;
+        const { scripts } = await Manifest.fromFile(fileName);
 
-        // Check if there are any scripts in the manifest file
+        this.log.info(`Looking for scripts in ${fileName}...`);
         if (scripts.size === 0) {
-            this.context.stdout.write(
-                `There are no scripts defined in ${Manifest.fileName}.\n`
+            this.log.info(
+                chalk`{red There are no scripts defined in {bold ${fileName}}.}`
             );
             return 0;
         }
+        this.log.info(chalk`{green Found ${scripts.size} script(s)!}\n`);
 
-        // Determine matched scripts
+        this.log.info('Looking for matching scripts...');
         let matchedScriptsText = '';
         for (const script of scripts.keys()) {
             let matched = false;
@@ -73,21 +83,19 @@ export class RungexCommand extends Command {
             if (matched) {
                 const fullScript = `yarn ${script}`;
                 this.matchedScripts.push(fullScript);
-                matchedScriptsText += `-> "${fullScript}"\n`;
+                matchedScriptsText += chalk`> {blue "${fullScript}"}\n`;
             }
         }
 
-        // Check if there were any matched scripts
         if (this.matchedScripts.length === 0) {
-            this.context.stdout.write(
-                'There were no matched scripts to run.\n'
-            );
+            this.log.info(chalk`{red There were no matched scripts to run.}`);
             return 0;
         }
 
-        // Else display all matched scripts
-        this.context.stdout.write('Matched scripts:\n');
-        this.context.stdout.write(`${matchedScriptsText}\n`);
+        this.log.info(
+            chalk`{green Found ${this.matchedScripts.length} matched script(s):}`
+        );
+        this.log.info(`${matchedScriptsText}`);
 
         return -1;
     }
@@ -99,35 +107,39 @@ export class RungexCommand extends Command {
         });
 
         const { answer } = await readlineSync.askQuestion(
-            'Do you want to run the matched scripts? (y/N): '
+            chalk.bold`{red !} Do you want to run the matched scripts? (y/N): `
         );
+
+        this.log.newLine();
+
         if (['y', 'Y', 'yes', 'YES', 'Yes'].includes(answer)) {
             return await this.runMatchedScripts();
         } else {
-            this.context.stdout.write('Aborting...\n');
+            this.log.info(chalk.bold.red`Aborting...`);
             return 0;
         }
     }
 
     async runMatchedScripts(): Promise<number> {
-        // const startTime = new Date().getTime();
-        // console.log({ startTime });
-        let exitCode = 0;
+        const startTime = new Date().getTime();
         if (this.parallel) {
+            this.log.title('Running matched scripts in parallel');
             const executePromises = this.matchedScripts.map((script) =>
                 execute(script)
             );
-            const exitCodes = await Promise.all(executePromises);
-            exitCode = exitCodes.some((code) => code) ? 1 : 0;
+            await Promise.all(executePromises);
+            this.log.done();
+            this.log.newLine();
         } else {
             for (const script of this.matchedScripts) {
-                this.context.stdout.write(
-                    `\n===============================\nRunning "${script}"...\n===============================\n`
-                );
-                exitCode ||= await execute(script);
+                this.log.title(`Running "${script}"`);
+                await execute(`${script} || true`);
+                this.log.done();
+                this.log.newLine();
             }
         }
-        // console.log({ totalTime: new Date().getTime() - startTime });
-        return exitCode;
+        const totalTime = new Date().getTime() - startTime;
+        this.log.info(`Executed scripts in ${totalTime / 1000}s`);
+        return 0;
     }
 }

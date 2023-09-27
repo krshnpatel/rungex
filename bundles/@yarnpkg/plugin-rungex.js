@@ -1649,7 +1649,9 @@ var plugin = (() => {
       const dividerSplitLength = (DIVIDER_LENGTH - END_TEXT.length - END_TEXT_SPACE_AROUND * 2) / 2;
       const divider = "=".repeat(dividerSplitLength);
       const spaceAround = " ".repeat(END_TEXT_SPACE_AROUND);
-      this.logger.write(import_chalk.default.red`${divider}${spaceAround}{bold ${END_TEXT}}${spaceAround}${divider}\n`);
+      this.logger.write(
+        import_chalk.default.red`${divider}${spaceAround}{bold ${END_TEXT}}${spaceAround}${divider}\n`
+      );
     }
   };
 
@@ -1658,8 +1660,17 @@ var plugin = (() => {
   var COMMAND_NAME = "rungex";
   var COMMAND_USAGE = {
     description: "Run multiple package scripts using Regex.",
-    details: "This command will print a nice message.",
-    examples: [["Add two numbers together", "yarn addition 42 10"]]
+    details: 'This command will match package.json scripts with the inputted Regex string, prefix, or suffix. The user will then be prompted to run them if desired. The matched scripts could also be run in parallel to each other if the "-p" flag is specified. To skip the user prompt for running the matched scripts, the "-c" flag can be passed in.',
+    examples: [
+      [
+        'Run all scripts matching the Regex: "lint.*"',
+        'yarn rungex "lint.*"'
+      ],
+      ["Run all matching scripts in parallel", 'yarn rungex "lint.*" -p'],
+      ['Run all scripts that start with "test"', 'yarn rungex "test" -sw'],
+      ['Run all scripts that end with "build"', 'yarn rungex "build" -ew'],
+      ["Run all scripts without user prompt", 'yarn rungex "build" -c']
+    ]
   };
   var RungexCommand = class extends import_clipanion.Command {
     constructor() {
@@ -1687,7 +1698,7 @@ var plugin = (() => {
     validate() {
       if (this.startsWith && this.endsWith) {
         throw new import_clipanion.UsageError(
-          'Invalid option schema: mutually exclusive properties "startsWith", "endsWith"'
+          'Invalid option schema: mutually exclusive properties "startsWith" and "endsWith"'
         );
       }
     }
@@ -1701,7 +1712,9 @@ var plugin = (() => {
         );
         return 0;
       }
-      this.log.info(import_chalk2.default`{green Found ${scripts.size} script(s)!}\n`);
+      this.log.info(
+        import_chalk2.default`{green Found ${scripts.size} script${scripts.size > 1 ? "s" : ""}!}\n`
+      );
       this.log.info("Looking for matching scripts...");
       let matchedScriptsText = "";
       for (const script of scripts.keys()) {
@@ -1724,7 +1737,7 @@ var plugin = (() => {
         return 0;
       }
       this.log.info(
-        import_chalk2.default`{green Found ${this.matchedScripts.length} matched script(s):}`
+        import_chalk2.default`{green Found ${this.matchedScripts.length} matched script${this.matchedScripts.length > 1 ? "s" : ""}:}`
       );
       this.log.info(`${matchedScriptsText}`);
       return -1;
@@ -1735,7 +1748,7 @@ var plugin = (() => {
         output: this.context.stdout
       });
       const { answer } = await readlineSync.askQuestion(
-        import_chalk2.default.bold`{red !} Do you want to run the matched scripts? (y/N): `
+        import_chalk2.default.bold`{red !} Do you want to run the matched script${this.matchedScripts.length > 1 ? "s" : ""}? (y/N): `
       );
       this.log.newLine();
       if (["y", "Y", "yes", "YES", "Yes"].includes(answer)) {

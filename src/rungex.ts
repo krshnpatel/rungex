@@ -9,8 +9,18 @@ const COMMAND_NAME = 'rungex';
 
 const COMMAND_USAGE: Usage = {
     description: 'Run multiple package scripts using Regex.',
-    details: 'This command will print a nice message.',
-    examples: [['Add two numbers together', 'yarn addition 42 10']],
+    details:
+        'This command will match package.json scripts with the inputted Regex string, prefix, or suffix. The user will then be prompted to run them if desired. The matched scripts could also be run in parallel to each other if the "-p" flag is specified. To skip the user prompt for running the matched scripts, the "-c" flag can be passed in.',
+    examples: [
+        [
+            'Run all scripts matching the Regex: "lint.*"',
+            'yarn rungex "lint.*"',
+        ],
+        ['Run all matching scripts in parallel', 'yarn rungex "lint.*" -p'],
+        ['Run all scripts that start with "test"', 'yarn rungex "test" -sw'],
+        ['Run all scripts that end with "build"', 'yarn rungex "build" -ew'],
+        ['Run all scripts without user prompt', 'yarn rungex "build" -c'],
+    ],
 };
 
 export class RungexCommand extends Command {
@@ -50,7 +60,7 @@ export class RungexCommand extends Command {
     validate() {
         if (this.startsWith && this.endsWith) {
             throw new UsageError(
-                'Invalid option schema: mutually exclusive properties "startsWith", "endsWith"'
+                'Invalid option schema: mutually exclusive properties "startsWith" and "endsWith"'
             );
         }
     }
@@ -66,7 +76,11 @@ export class RungexCommand extends Command {
             );
             return 0;
         }
-        this.log.info(chalk`{green Found ${scripts.size} script(s)!}\n`);
+        this.log.info(
+            chalk`{green Found ${scripts.size} script${
+                scripts.size > 1 ? 's' : ''
+            }!}\n`
+        );
 
         this.log.info('Looking for matching scripts...');
         let matchedScriptsText = '';
@@ -93,7 +107,9 @@ export class RungexCommand extends Command {
         }
 
         this.log.info(
-            chalk`{green Found ${this.matchedScripts.length} matched script(s):}`
+            chalk`{green Found ${this.matchedScripts.length} matched script${
+                this.matchedScripts.length > 1 ? 's' : ''
+            }:}`
         );
         this.log.info(`${matchedScriptsText}`);
 
@@ -107,7 +123,9 @@ export class RungexCommand extends Command {
         });
 
         const { answer } = await readlineSync.askQuestion(
-            chalk.bold`{red !} Do you want to run the matched scripts? (y/N): `
+            chalk.bold`{red !} Do you want to run the matched script${
+                this.matchedScripts.length > 1 ? 's' : ''
+            }? (y/N): `
         );
 
         this.log.newLine();

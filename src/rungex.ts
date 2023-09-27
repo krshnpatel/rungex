@@ -8,7 +8,7 @@ import chalk from 'chalk';
 const COMMAND_NAME = 'rungex';
 
 const COMMAND_USAGE: Usage = {
-    description: 'Run multiple package scripts using Regex.',
+    description: 'Run multiple package.json scripts using Regex.',
     details:
         'This command will match package.json scripts with the inputted Regex string, prefix, or suffix. The user will then be prompted to run them if desired. The matched scripts could also be run in parallel to each other if the "-p" flag is specified. To skip the user prompt for running the matched scripts, the "-c" flag can be passed in.',
     examples: [

@@ -1,11 +1,11 @@
 {
-  "author": "Krishan Patel",
-  "license": "MIT",
   "name": "yarn-plugin-rungex",
-  "packageManager": "yarn@3.6.1",
-  "description": "A Yarn plugin that can be used to run multiple commands with regex.",
   "version": "1.0.0",
+  "description": "A Yarn plugin that can be used to run multiple package.json scripts using Regex.",
+  "author": "Krishan Patel <krishanpatel09@gmail.com>",
+  "license": "MIT",
   "main": "src/index.ts",
+  "packageManager": "yarn@3.6.1",
   "homepage": "https://github.com/krshnpatel/rungex#readme",
   "repository": {
     "type": "git",
@@ -15,12 +15,12 @@
     "url": "https://github.com/krshnpatel/rungex/issues"
   },
   "scripts": {
+    "build": "builder build plugin",
     "update:local": "builder build plugin --no-minify",
     "start": "watch 'yarn update:local' ./src",
     "lint": "eslint src/",
     "lint:fix": "eslint src/ --fix",
-    "prepare": "husky install",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepare": "husky install"
   },
   "lint-staged": {
     "*.{ts,tsx}": "yarn lint:fix",
@@ -51,6 +51,9 @@
     "regex",
     "run",
     "command",
-    "scripts"
+    "scripts",
+    "prefix",
+    "suffix",
+    "parallel"
   ]
 }

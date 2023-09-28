@@ -1,6 +1,6 @@
 {
   "name": "yarn-plugin-rungex",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A Yarn plugin that can be used to run multiple package.json scripts using Regex.",
   "author": "Krishan Patel <krishanpatel09@gmail.com>",
   "license": "MIT",

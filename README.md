@@ -1,6 +1,6 @@
 # yarn-plugin-rungex
 
-[![Release](https://github.com/krshnpatel/rungex/actions/workflows/main.yml/badge.svg)](https://github.com/krshnpatel/rungex/actions/workflows/main.yml)
+[![Release](https://github.com/krshnpatel/rungex/actions/workflows/release.yml/badge.svg)](https://github.com/krshnpatel/rungex/actions/workflows/release.yml)
 
 A Yarn Berry plugin that can be used to run multiple package.json scripts with Regex.
 
@@ -88,4 +88,10 @@ Run all scripts in parallel without prompting the user for any input. The follow
 yarn rungex "build" -c -p
 # OR
 yarn rungex "build" --ci --parallel
+```
+
+## Uninstall
+
+```sh
+yarn plugin remove @yarnpkg/plugin-rungex
 ```

@@ -1,9 +1,6 @@
 /**
  * @type {import('semantic-release').GlobalConfig}
  */
-
-const config = {
+module.exports = {
     branches: ['main'],
 };
-
-export default config;

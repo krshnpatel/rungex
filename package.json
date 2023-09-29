@@ -23,13 +23,16 @@
     "start": "watch 'yarn update:local' ./src",
     "lint": "eslint src/",
     "lint:fix": "eslint src/ --fix",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "commitlint": "commitlint --edit"
   },
   "lint-staged": {
     "*.{ts,tsx}": "yarn lint:fix",
     "*.{ts,tsx,js,css,md}": "prettier --write"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.7.2",
+    "@commitlint/config-conventional": "^17.7.0",
     "@types/eslint": "^8",
     "@types/watch": "^1",
     "@typescript-eslint/eslint-plugin": "latest",
@@ -41,6 +44,7 @@
     "husky": "^8.0.3",
     "lint-staged": "^13.2.3",
     "prettier": "^3.0.0",
+    "semantic-release": "^22.0.5",
     "typescript": "^5.1.6",
     "watch": "^1.0.2"
   },

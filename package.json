@@ -1,6 +1,6 @@
 {
   "name": "yarn-plugin-rungex",
-  "version": "1.0.0",
+  "version": "0.0.0-development",
   "description": "A Yarn plugin that can be used to run multiple package.json scripts using Regex.",
   "author": "Krishan Patel <krishanpatel09@gmail.com>",
   "license": "MIT",
@@ -24,7 +24,8 @@
     "lint": "eslint src/",
     "lint:fix": "eslint src/ --fix",
     "prepare": "husky install",
-    "commitlint": "commitlint --edit"
+    "commitlint": "commitlint --edit",
+    "semantic-release": "semantic-release"
   },
   "lint-staged": {
     "*.{ts,tsx}": "yarn lint:fix",

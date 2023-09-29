@@ -1,5 +1,7 @@
 # yarn-plugin-rungex
 
+[![Release](https://github.com/krshnpatel/rungex/actions/workflows/main.yml/badge.svg)](https://github.com/krshnpatel/rungex/actions/workflows/main.yml)
+
 A Yarn Berry plugin that can be used to run multiple package.json scripts with Regex.
 
 ## Install

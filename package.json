@@ -5,7 +5,7 @@
   "author": "Krishan Patel <krishanpatel09@gmail.com>",
   "license": "MIT",
   "main": "src/index.ts",
-  "packageManager": "yarn@3.6.1",
+  "packageManager": "yarn@3.6.3",
   "homepage": "https://github.com/krshnpatel/rungex#readme",
   "repository": {
     "type": "git",
@@ -17,6 +17,9 @@
   "files": [
     "bundles/@yarnpkg/plugin-rungex.js"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "builder build plugin",
     "update:local": "builder build plugin --no-minify",

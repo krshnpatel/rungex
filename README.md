@@ -1,7 +1,6 @@
 # yarn-plugin-rungex
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
+
+[![All Contributors](https://img.shields.io/github/all-contributors/krshnpatel/rungex?color=ee8449&style=flat-square)](#contributors)
 
 [![Release](https://github.com/krshnpatel/rungex/actions/workflows/release.yml/badge.svg)](https://github.com/krshnpatel/rungex/actions/workflows/release.yml)
 
@@ -100,8 +99,6 @@ yarn plugin remove @yarnpkg/plugin-rungex
 ```
 
 ## Contributors ✨
-
-Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->

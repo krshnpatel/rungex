@@ -1,6 +1,7 @@
 # yarn-plugin-rungex
 
 [![Release](https://github.com/krshnpatel/rungex/actions/workflows/release.yml/badge.svg)](https://github.com/krshnpatel/rungex/actions/workflows/release.yml)
+[![All Contributors](https://img.shields.io/github/all-contributors/krshnpatel/rungex?color=ee8449&style=flat-square)](#contributors)
 
 A Yarn Berry plugin that can be used to run multiple package.json scripts with Regex.
 
@@ -95,3 +96,14 @@ yarn rungex "build" --ci --parallel
 ```sh
 yarn plugin remove @yarnpkg/plugin-rungex
 ```
+
+## Contributors
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->

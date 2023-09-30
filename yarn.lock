@@ -1460,6 +1460,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@yarnpkg/fslib@npm:^3.0.0-rc.52":
+  version: 3.0.0-rc.52
+  resolution: "@yarnpkg/fslib@npm:3.0.0-rc.52"
+  dependencies:
+    tslib: ^2.4.0
+  checksum: 5db0d7e6796bae1767119822e12210d9b75f0c0d57dac412e2efdb7d68413960d14d604e9be718861614e842698206456aee5544f00a309d6ca4e98896283743
+  languageName: node
+  linkType: hard
+
 "@yarnpkg/libui@npm:^3.0.0-rc.48":
   version: 3.0.0-rc.48
   resolution: "@yarnpkg/libui@npm:3.0.0-rc.48"
@@ -1503,6 +1512,16 @@ __metadata:
     js-yaml: ^3.10.0
     tslib: ^2.4.0
   checksum: c4328cad81ec91de0840b065dfcfda9afa038dadf7507f27f73415675e257a9ad3b21247a6e28a6e90533c411645320104fd529ef85659173932ae38b26a7b0e
+  languageName: node
+  linkType: hard
+
+"@yarnpkg/parsers@npm:^3.0.0-rc.52":
+  version: 3.0.0-rc.52
+  resolution: "@yarnpkg/parsers@npm:3.0.0-rc.52"
+  dependencies:
+    js-yaml: ^3.10.0
+    tslib: ^2.4.0
+  checksum: f510ae34d05224821f30d2203a31ebd6a7ef7499c0670b5fe643d22fdee11d516854a735ae429ca5ced3b621205724a4a248a4c6841f1c868486f791274b5123
   languageName: node
   linkType: hard
 
@@ -1888,20 +1907,20 @@ __metadata:
   linkType: hard
 
 "@yarnpkg/shell@npm:^4.0.0-rc.48":
-  version: 4.0.0-rc.48
-  resolution: "@yarnpkg/shell@npm:4.0.0-rc.48"
+  version: 4.0.0-rc.52
+  resolution: "@yarnpkg/shell@npm:4.0.0-rc.52"
   dependencies:
-    "@yarnpkg/fslib": ^3.0.0-rc.48
-    "@yarnpkg/parsers": ^3.0.0-rc.48
+    "@yarnpkg/fslib": ^3.0.0-rc.52
+    "@yarnpkg/parsers": ^3.0.0-rc.52
     chalk: ^3.0.0
-    clipanion: ^3.2.1
+    clipanion: ^4.0.0-rc.2
     cross-spawn: 7.0.3
     fast-glob: ^3.2.2
     micromatch: ^4.0.2
     tslib: ^2.4.0
   bin:
     shell: ./lib/cli.js
-  checksum: 7a5cc1e4718f0294eee80d085c6e7b2ccf794d196ecc885d2faff343a34f2f9aca1919266cdcd94b51ef5f33ad356a4e0dacb620c92a7716b12367b9d2aaf2c2
+  checksum: c99db4908318ab756e5d72c2861b2482f679a40a4d3281d1569d8e0117270019b9adb73ce5fa530bdb6c3c409a04447b8b6d6a0b99a9793970adf444eb8a8678
   languageName: node
   linkType: hard
 
@@ -2637,6 +2656,17 @@ __metadata:
   peerDependencies:
     typanion: "*"
   checksum: 448efd122ead3c802e61ba7a2002e2080c8cce01ce8a0a789d9b9e4f8fe70fd887dcf163ef8c778f5364a9e6f4b498b9f1853f709d7ed4291713e78bcfb88ee8
+  languageName: node
+  linkType: hard
+
+"clipanion@npm:^4.0.0-rc.2":
+  version: 4.0.0-rc.2
+  resolution: "clipanion@npm:4.0.0-rc.2"
+  dependencies:
+    typanion: ^3.8.0
+  peerDependencies:
+    typanion: "*"
+  checksum: 533a2a0fd2d18b0599afc8bb01452f87bdc3a6b5481c8c02d35821a01fba0a407a2057eb52168cb57c867a025adebe976d19327ce361390886d9850075805bb4
   languageName: node
   linkType: hard
 

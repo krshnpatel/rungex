@@ -1,0 +1,27 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "commitType": "docs",
+  "commitConvention": "angular",
+  "contributors": [
+    {
+      "login": "krshnpatel",
+      "name": "Krishan Patel",
+      "avatar_url": "https://avatars.githubusercontent.com/u/16576817?v=4",
+      "profile": "https://github.com/krshnpatel",
+      "contributions": [
+        "infra",
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "skipCi": true,
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "projectName": "rungex",
+  "projectOwner": "krshnpatel"
+}

@@ -1232,11 +1232,11 @@ __metadata:
   linkType: hard
 
 "@types/watch@npm:^1":
-  version: 1.0.3
-  resolution: "@types/watch@npm:1.0.3"
+  version: 1.0.6
+  resolution: "@types/watch@npm:1.0.6"
   dependencies:
     "@types/node": "*"
-  checksum: 8655d45bb17089def1f777f82359eb10772652376b817a2c98b2e3b432868289f02817e8fe7d42ec5218719a1d5461b1465f33cda282e96e07b0ee6bf270d26f
+  checksum: 4ccc4bc9a11c26aa9004110de0c504daa32933a2e55a8212198a290a22fdb4b0cfa07028c07866951e2c05660696c99230623ace0d8048d579d4c1467bd3a9b4
   languageName: node
   linkType: hard
 
